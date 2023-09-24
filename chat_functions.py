@@ -40,7 +40,7 @@ import streamlit as st
 # directory = os.path.join(current_directory, '..', 'data/')
 
 
-directory='../data' # This is the directory containing the CSV/text files.
+directory='/data' # This is the directory containing the CSV/text files.
 
 # Initialize Dictionaries
 tool_dict = dict()
