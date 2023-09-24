@@ -27,6 +27,9 @@ from langchain.prompts import MessagesPlaceholder
 from langchain.agents import AgentExecutor
 from langchain.agents.openai_functions_agent.agent_token_buffer_memory import AgentTokenBufferMemory
 
+import streamlit as st
+
+
 #/Users/sunnyd/Downloads/Archive/data
 
 # UPDATE THESE PARAMETERS AS NEEDED
@@ -37,7 +40,7 @@ from langchain.agents.openai_functions_agent.agent_token_buffer_memory import Ag
 # directory = os.path.join(current_directory, '..', 'data/')
 
 
-directory='/Users/sunnyd/Downloads/Archive/data' # This is the directory containing the CSV/text files.
+directory='../data' # This is the directory containing the CSV/text files.
 
 # Initialize Dictionaries
 tool_dict = dict()
@@ -51,7 +54,7 @@ conversation_dict = dict()
 doc_dict = dict()
 queries_dict = dict()
 
-def create_documents(directory='/Users/sunnyd/Downloads/Archive/data', glob='**/[!.]*', show_progress=True, loader_cls=CSVLoader):
+def create_documents(directory='../data', glob='**/[!.]*', show_progress=True, loader_cls=CSVLoader):
     loader = DirectoryLoader(
         directory, glob=glob, show_progress=show_progress,
         loader_cls=loader_cls)
@@ -88,12 +91,15 @@ def create_tools_list(retriever_dict, description_dict):
 
 def create_chatbot(tools, verbose=True):
 
+    os.environ['openai_organization'] = st.secrets['openai_organization']
+
+    os.environ['openai_api_key'] = st.secrets['openai_api_key']
+
+
     llm = ChatOpenAI(
         temperature = 0,
         openai_organization=os.environ['openai_organization'],
         openai_api_key=os.environ['openai_api_key'],
-        # openai_organization = "org-iSUcWP5inecidf8xlE9qY4JQ",
-        # openai_api_key = "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",
         )
     
 
